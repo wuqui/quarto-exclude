@@ -30,7 +30,9 @@ The three states of matter are:
 3. Gas
 :::
 
-## Header exclusion
+## Section exclusion
+
+Headers with `.excl` remove the entire section, including all content and subsections.
 
 ### Exercise
 
@@ -41,6 +43,16 @@ Solve the equation: 2x + 5 = 15
 Subtract 5 from both sides: 2x = 10
 
 Divide by 2: x = 5
+
+#### Verification
+
+Let's verify: 2(5) + 5 = 10 + 5 = 15 ✓
+
+This subsection is also hidden because it's nested inside the Solution section.
+
+### Next Exercise
+
+This section appears because it's at the same level as Solution.
 
 ## Configuration
 
