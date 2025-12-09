@@ -1,0 +1,11 @@
+/.luarc.json
+
+# Rendered output
+*.html
+*_files/
+
+# OS files
+.DS_Store
+
+# Private dev notes
+/dev/
