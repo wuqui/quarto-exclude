@@ -1,0 +1,52 @@
+---
+title: "Exclude Extension Demo"
+filters:
+  - exclude
+params:
+  show_excl: true  # Set to false to hide .excl content
+---
+
+## Introduction
+
+This document demonstrates the `exclude` Quarto extension.
+
+## Inline exclusion
+
+What is 6 times 7? [42]{.excl}
+
+Who wrote *Hamlet*? [Shakespeare]{.excl}
+
+## Block exclusion
+
+Here's a question:
+
+What are the three states of matter?
+
+::: {.excl}
+The three states of matter are:
+
+1. Solid
+2. Liquid
+3. Gas
+:::
+
+## Header exclusion
+
+### Exercise
+
+Solve the equation: 2x + 5 = 15
+
+### Solution {.excl}
+
+Subtract 5 from both sides: 2x = 10
+
+Divide by 2: x = 5
+
+## Configuration
+
+To hide all `.excl` content, change the YAML frontmatter:
+
+```yaml
+params:
+  show_excl: false
+```
