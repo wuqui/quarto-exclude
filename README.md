@@ -71,20 +71,30 @@ The extension supports RevealJS-specific modifiers for presentations:
 
 ### Slide modifier
 
-Use `.excl .slide` to create a new slide before the excluded content:
+Use `.excl .slide` to create a new slide before the excluded content. This works on both divs and headings:
 
 ```markdown
 ::: {.excl .slide}
 Solution content appears on a new slide.
 :::
+
+## Solution {.excl .slide}
+This heading creates a slide break in RevealJS presentations.
 ```
 
 ### Fragment modifier
 
-Use `.excl .fragment` to reveal content as a RevealJS fragment:
+Use `.excl .fragment` to reveal content as a RevealJS fragment. This works on inline content, divs, and headings:
 
 ```markdown
 The answer is [42]{.excl .fragment}
+
+::: {.excl .fragment}
+This block will be revealed as a fragment.
+:::
+
+### Solution {.excl .fragment}
+This heading will be revealed as a fragment in RevealJS presentations.
 ```
 
 ## Styling
@@ -95,8 +105,8 @@ By default, `.excl` content is styled with subtle visual indicators when shown:
 - **Block content** (divs): Blue left border with padding
 - **Headings**: 
   - **HTML format**: Blue left border with padding
-  - **RevealJS format**: Blue underline (simplified for presentations)
-- **Sections** (HTML only): When a heading has `.excl`, the entire section (including all content and subsections) gets a blue left border
+  - **RevealJS format**: Blue underline and left border. The border spans from the heading through its content until the next heading of the same or higher level
+  - **Sections** (HTML only): When a heading has `.excl`, the entire section (including all content and subsections) gets a blue left border
 
 The styling uses a medium blue color (`#3b82f6`) that works well in both light and dark modes, automatically adjusting to a lighter shade in dark mode.
 

@@ -2,7 +2,12 @@
 title: "Exclude Extension Demo"
 filters:
   - exclude
-format: revealjs
+format:
+  html:
+    toc: true
+  revealjs:
+    theme: default
+    output-file: example-revealjs
 params:
   show_excl: true  # Set to false to hide .excl content
 ---
@@ -51,17 +56,19 @@ Let's verify: 2(5) + 5 = 10 + 5 = 15 ✓
 
 This section appears because it's at the same level as Solution.
 
-## RevealJS: Fragment modifier
+## RevealJS Modifiers
 
-Use `.fragment` to reveal content step-by-step:
+### Fragment modifier
+
+Use `.fragment` to reveal content step-by-step (RevealJS only):
 
 The answer is [42]{.excl .fragment}
 
 More content appears [here]{.excl .fragment}
 
-## RevealJS: Slide modifier
+### Slide modifier
 
-Use `.slide` to create a new slide for excluded content:
+Use `.slide` to create a new slide for excluded content (RevealJS only):
 
 ::: {.excl .slide}
 **Solution Slide**
@@ -83,9 +90,9 @@ Block content has a blue left border with padding.
 
 ### Styled Heading {.excl}
 
-In RevealJS, headings with `.excl` get a blue underline.
+**HTML format**: When a heading has `.excl`, the entire section (including all content and subsections) gets a blue left border.
 
-In HTML format, when a heading has `.excl`, the entire section (including all content and subsections) gets a blue left border.
+**RevealJS format**: Headings with `.excl` get a blue underline, and the border spans from the heading through its content until the next heading of the same or higher level.
 
 ## Configuration
 
