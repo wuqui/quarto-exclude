@@ -9,6 +9,11 @@
 
 # Private dev notes
 /dev/
+/notes/
+
+# LLM collaboration files (should remain private)
+CLAUDE.md
+.cursorrules
 
 # Local dev copy of CSS (extension CSS in _extensions/ should be tracked)
 /exclude-styles.css
