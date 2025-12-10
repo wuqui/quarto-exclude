@@ -1,15 +1,17 @@
 ---
 title: "Exclude Extension Demo"
-number-sections: true
 filters:
   - exclude
+format:
+  revealjs:
+    css: exclude-styles.css
 params:
   show_excl: true  # Set to false to hide .excl content
 ---
 
 ## Introduction
 
-This document demonstrates the `exclude` Quarto extension.
+This presentation demonstrates the `exclude` Quarto extension.
 
 ## Inline exclusion
 
@@ -43,23 +45,62 @@ Solve the equation: 2x + 5 = 15
 
 Subtract 5 from both sides: 2x = 10
 
-Divide by 2: x = 5
-
 #### Verification
 
 Let's verify: 2(5) + 5 = 10 + 5 = 15 ✓
-
-This subsection is also hidden because it's nested inside the Solution section.
 
 ### Next Exercise
 
 This section appears because it's at the same level as Solution.
 
+## RevealJS: Fragment modifier
+
+Use `.fragment` to reveal content step-by-step:
+
+The answer is [42]{.excl .fragment}
+
+More content appears [here]{.excl .fragment}
+
+## RevealJS: Slide modifier
+
+Use `.slide` to create a new slide for excluded content:
+
+::: {.excl .slide}
+**Solution Slide**
+
+This solution appears on its own slide when `show_excl: true`.
+
+The `.slide` modifier creates a horizontal rule before the content.
+:::
+
+## Styling
+
+By default, excluded content has subtle styling when shown:
+
+- [Inline content]{.excl} has a blue underline.
+
+::: {.excl}
+Block content has a blue left border with padding.
+:::
+
+### Styled Heading {.excl}
+
+When a heading has `.excl`, the entire section (including all content and subsections) gets a blue left border.
+
 ## Configuration
 
-To hide all `.excl` content, change the YAML frontmatter:
+To hide all `.excl` content:
+
+```yaml
+params:
+  show_excl: false
+```
+
+To disable styling:
 
 ```yaml
 params:
   show_excl: true
+  excl-style:
+    enabled: false
 ```

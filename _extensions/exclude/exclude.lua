@@ -15,12 +15,21 @@
 -- Control visibility in YAML frontmatter:
 --   params:
 --     show_excl: false  # hide .excl content
+--
+-- Control styling in YAML frontmatter:
+--   params:
+--     show_excl: true
+--     excl-style:
+--       enabled: false  # disable default styling
 
 -- Requires pandoc 2.8+ for pandoc.utils.make_sections
 PANDOC_VERSION:must_be_at_least {2,8}
 
 local utils = require 'pandoc.utils'
 local show_excl = true  -- default: show everything
+
+-- Styling configuration
+local excl_style_enabled = true
 
 -- Helper: check if element has class
 local function has_class(el, name)
@@ -62,9 +71,23 @@ end
 
 -- Pass 1: Read params from document metadata
 function Meta(meta)
+  -- Read show_excl parameter
   if meta.params and meta.params.show_excl == false then
     show_excl = false
   end
+  
+  -- Read styling configuration
+  if meta.params and meta.params["excl-style"] then
+    local style = meta.params["excl-style"]
+    if style.enabled == false then
+      excl_style_enabled = false
+      -- Add body class to disable styling via CSS
+      if not meta.html then meta.html = {} end
+      if not meta.html["body-header"] then meta.html["body-header"] = {} end
+      table.insert(meta.html["body-header"], '<script>document.body.classList.add("excl-style-disabled");</script>')
+    end
+  end
+
   return meta
 end
 
@@ -102,17 +125,26 @@ local function remove_excl_div(el)
       return {}  -- remove when hiding
     end
     -- When showing, handle modifiers
+    -- Keep .excl class for styling unless styling is disabled
     if has_class(el, "slide") then
       remove_class(el, "slide")
-      remove_class(el, "excl")
+      if not excl_style_enabled then
+        remove_class(el, "excl")  -- remove .excl if styling disabled
+      end
       return { pandoc.HorizontalRule(), el }
     end
     -- .fragment stays on element (RevealJS handles it)
     if has_class(el, "fragment") then
-      remove_class(el, "excl")  -- remove .excl class, keep .fragment
+      if not excl_style_enabled then
+        remove_class(el, "excl")  -- remove .excl if styling disabled
+      end
+      -- Keep .excl class if styling enabled (for CSS)
       return el  -- return modified element
     else
-      remove_class(el, "excl")  -- remove .excl class if no modifiers
+      if not excl_style_enabled then
+        remove_class(el, "excl")  -- remove .excl if styling disabled
+      end
+      -- Keep .excl class if styling enabled (for CSS)
       return el  -- return modified element
     end
   end
@@ -124,11 +156,29 @@ local function remove_excl_span(el)
     if not show_excl then
       return {}  -- remove when hiding
     end
-    -- When showing, remove .excl class (fragment class stays for RevealJS)
-    remove_class(el, "excl")
+    -- When showing, keep .excl class for styling unless styling is disabled
+    if not excl_style_enabled then
+      remove_class(el, "excl")  -- remove .excl if styling disabled
+    end
+    -- Keep .excl class if styling enabled (for CSS)
     return el
   end
   return nil  -- no modification needed
+end
+
+-- Pass 6: Handle headings with .excl class (for styling control)
+function Header(el)
+  if has_class(el, "excl") then
+    if not show_excl then
+      return {}  -- remove when hiding
+    end
+    -- When showing, remove .excl class only if styling is disabled
+    if not excl_style_enabled then
+      remove_class(el, "excl")
+    end
+    -- Keep .excl class if styling enabled (for CSS)
+  end
+  return el
 end
 
 return {
@@ -136,5 +186,5 @@ return {
   { Pandoc = setup_document },
   { Div = drop_excl_sections },
   { Div = flatten_sections },
-  { Div = remove_excl_div, Span = remove_excl_span }
+  { Div = remove_excl_div, Span = remove_excl_span, Header = Header }
 }

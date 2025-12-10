@@ -9,3 +9,6 @@
 
 # Private dev notes
 /dev/
+
+# Local dev copy of CSS (extension CSS in _extensions/ should be tracked)
+/exclude-styles.css
