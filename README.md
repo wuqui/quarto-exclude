@@ -93,8 +93,10 @@ By default, `.excl` content is styled with subtle visual indicators when shown:
 
 - **Inline content** (spans): Blue underline
 - **Block content** (divs): Blue left border with padding
-- **Headings**: Blue left border with padding
-- **Sections**: When a heading has `.excl`, the entire section (including all content and subsections) gets a blue left border
+- **Headings**: 
+  - **HTML format**: Blue left border with padding
+  - **RevealJS format**: Blue underline (simplified for presentations)
+- **Sections** (HTML only): When a heading has `.excl`, the entire section (including all content and subsections) gets a blue left border
 
 The styling uses a medium blue color (`#3b82f6`) that works well in both light and dark modes, automatically adjusting to a lighter shade in dark mode.
 

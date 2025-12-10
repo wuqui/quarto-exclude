@@ -85,7 +85,9 @@ Block content has a blue left border with padding.
 
 ### Styled Heading {.excl}
 
-When a heading has `.excl`, the entire section (including all content and subsections) gets a blue left border.
+In RevealJS, headings with `.excl` get a blue underline.
+
+In HTML format, when a heading has `.excl`, the entire section (including all content and subsections) gets a blue left border.
 
 ## Configuration
 
