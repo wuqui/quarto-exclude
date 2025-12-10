@@ -69,6 +69,13 @@ local function section_header(div)
   return nil
 end
 
+-- Helper: conditionally remove .excl class based on styling configuration
+local function maybe_remove_excl_class(el)
+  if not excl_style_enabled then
+    remove_class(el, "excl")
+  end
+end
+
 -- Pass 1: Read params from document metadata
 function Meta(meta)
   -- Read show_excl parameter
@@ -128,23 +135,15 @@ local function remove_excl_div(el)
     -- Keep .excl class for styling unless styling is disabled
     if has_class(el, "slide") then
       remove_class(el, "slide")
-      if not excl_style_enabled then
-        remove_class(el, "excl")  -- remove .excl if styling disabled
-      end
+      maybe_remove_excl_class(el)
       return { pandoc.HorizontalRule(), el }
     end
     -- .fragment stays on element (RevealJS handles it)
     if has_class(el, "fragment") then
-      if not excl_style_enabled then
-        remove_class(el, "excl")  -- remove .excl if styling disabled
-      end
-      -- Keep .excl class if styling enabled (for CSS)
+      maybe_remove_excl_class(el)
       return el  -- return modified element
     else
-      if not excl_style_enabled then
-        remove_class(el, "excl")  -- remove .excl if styling disabled
-      end
-      -- Keep .excl class if styling enabled (for CSS)
+      maybe_remove_excl_class(el)
       return el  -- return modified element
     end
   end
@@ -157,10 +156,7 @@ local function remove_excl_span(el)
       return {}  -- remove when hiding
     end
     -- When showing, keep .excl class for styling unless styling is disabled
-    if not excl_style_enabled then
-      remove_class(el, "excl")  -- remove .excl if styling disabled
-    end
-    -- Keep .excl class if styling enabled (for CSS)
+    maybe_remove_excl_class(el)
     return el
   end
   return nil  -- no modification needed
@@ -173,10 +169,7 @@ function Header(el)
       return {}  -- remove when hiding
     end
     -- When showing, remove .excl class only if styling is disabled
-    if not excl_style_enabled then
-      remove_class(el, "excl")
-    end
-    -- Keep .excl class if styling enabled (for CSS)
+    maybe_remove_excl_class(el)
   end
   return el
 end
