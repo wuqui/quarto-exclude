@@ -2,9 +2,7 @@
 title: "Exclude Extension Demo"
 filters:
   - exclude
-format:
-  revealjs:
-    css: exclude-styles.css
+format: revealjs
 params:
   show_excl: true  # Set to false to hide .excl content
 ---

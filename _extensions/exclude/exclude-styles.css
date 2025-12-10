@@ -37,16 +37,16 @@ body.excl-style-disabled h6.excl {
 
 /* Span styling (inline content) */
 span.excl {
-  text-decoration: underline;
-  text-decoration-color: var(--excl-color);
-  text-decoration-thickness: var(--excl-underline-thickness);
+  text-decoration: underline !important;
+  text-decoration-color: var(--excl-color) !important;
+  text-decoration-thickness: var(--excl-underline-thickness) !important;
 }
 
 /* Div styling (block content) */
 div.excl {
-  border-left: var(--excl-border-width) solid var(--excl-color);
-  padding-left: var(--excl-padding);
-  margin-left: var(--excl-margin);
+  border-left: var(--excl-border-width) solid var(--excl-color) !important;
+  padding-left: var(--excl-padding) !important;
+  margin-left: var(--excl-margin) !important;
 }
 
 /* Section styling - when heading has .excl, entire section gets border */
@@ -81,15 +81,15 @@ section.excl > h6.excl {
 
 /* RevealJS specific styling */
 .reveal span.excl {
-  text-decoration: underline;
-  text-decoration-color: var(--excl-color);
-  text-decoration-thickness: var(--excl-underline-thickness);
+  text-decoration: underline !important;
+  text-decoration-color: var(--excl-color) !important;
+  text-decoration-thickness: var(--excl-underline-thickness) !important;
 }
 
 .reveal div.excl {
-  border-left: var(--excl-border-width) solid var(--excl-color);
-  padding-left: var(--excl-padding);
-  margin-left: var(--excl-margin);
+  border-left: var(--excl-border-width) solid var(--excl-color) !important;
+  padding-left: var(--excl-padding) !important;
+  margin-left: var(--excl-margin) !important;
 }
 
 /* RevealJS heading styling - simple underline for headings with .excl */
@@ -99,8 +99,8 @@ section.excl > h6.excl {
 .reveal h4.excl,
 .reveal h5.excl,
 .reveal h6.excl {
-  text-decoration: underline;
-  text-decoration-color: var(--excl-color);
-  text-decoration-thickness: var(--excl-underline-thickness);
+  text-decoration: underline !important;
+  text-decoration-color: var(--excl-color) !important;
+  text-decoration-thickness: var(--excl-underline-thickness) !important;
 }
 

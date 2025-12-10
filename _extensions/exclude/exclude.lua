@@ -100,6 +100,19 @@ end
 
 -- Pass 2: Setup - wrap all sections in Div elements
 local function setup_document(doc)
+  -- Ensure CSS is included for all HTML-based formats
+  -- We use quarto.doc.add_html_dependency() to automatically include CSS for all formats,
+  -- including clean-revealjs which doesn't properly support format contributions in _extension.yml.
+  -- Format contributions in _extension.yml serve as a fallback for html and revealjs formats.
+  -- This approach ensures users don't need to manually specify the CSS file.
+  if quarto.doc.is_format("html") or quarto.doc.is_format("clean-revealjs") or quarto.doc.is_format("revealjs") then
+    quarto.doc.add_html_dependency({
+      name = "quarto-exclude",
+      version = "1.4.0",
+      stylesheets = {"exclude-styles.css"}
+    })
+  end
+  
   if show_excl then return nil end  -- skip processing if showing everything
   local sections = utils.make_sections(false, nil, doc.blocks)
   return pandoc.Pandoc(sections, doc.meta)
@@ -139,13 +152,9 @@ local function remove_excl_div(el)
       return { pandoc.HorizontalRule(), el }
     end
     -- .fragment stays on element (RevealJS handles it)
-    if has_class(el, "fragment") then
-      maybe_remove_excl_class(el)
-      return el  -- return modified element
-    else
-      maybe_remove_excl_class(el)
-      return el  -- return modified element
-    end
+    -- For both fragment and non-fragment cases, remove .excl class if styling disabled
+    maybe_remove_excl_class(el)
+    return el
   end
   return nil  -- no modification needed
 end
