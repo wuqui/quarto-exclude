@@ -32,6 +32,17 @@ local function has_class(el, name)
   return false
 end
 
+-- Helper: remove class from element
+local function remove_class(el, name)
+  local new_classes = {}
+  for _, class in ipairs(el.classes) do
+    if class ~= name then
+      table.insert(new_classes, class)
+    end
+  end
+  el.classes = new_classes
+end
+
 -- Helper: check if div is a section div created by make_sections
 local function is_section_div(div)
   return div.t == 'Div'
@@ -86,15 +97,38 @@ end
 
 -- Pass 5: Remove standalone .excl divs and spans
 local function remove_excl_div(el)
-  if has_class(el, "excl") and not show_excl then
-    return {}
+  if has_class(el, "excl") then
+    if not show_excl then
+      return {}  -- remove when hiding
+    end
+    -- When showing, handle modifiers
+    if has_class(el, "slide") then
+      remove_class(el, "slide")
+      remove_class(el, "excl")
+      return { pandoc.HorizontalRule(), el }
+    end
+    -- .fragment stays on element (RevealJS handles it)
+    if has_class(el, "fragment") then
+      remove_class(el, "excl")  -- remove .excl class, keep .fragment
+      return el  -- return modified element
+    else
+      remove_class(el, "excl")  -- remove .excl class if no modifiers
+      return el  -- return modified element
+    end
   end
+  return nil  -- no modification needed
 end
 
 local function remove_excl_span(el)
-  if has_class(el, "excl") and not show_excl then
-    return {}
+  if has_class(el, "excl") then
+    if not show_excl then
+      return {}  -- remove when hiding
+    end
+    -- When showing, remove .excl class (fragment class stays for RevealJS)
+    remove_class(el, "excl")
+    return el
   end
+  return nil  -- no modification needed
 end
 
 return {

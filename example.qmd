@@ -1,5 +1,6 @@
 ---
 title: "Exclude Extension Demo"
+number-sections: true
 filters:
   - exclude
 params:
@@ -60,5 +61,5 @@ To hide all `.excl` content, change the YAML frontmatter:
 
 ```yaml
 params:
-  show_excl: false
+  show_excl: true
 ```

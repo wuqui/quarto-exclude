@@ -60,11 +60,32 @@ params:
 
 See `example.qmd` for a complete demonstration.
 
+## RevealJS Modifiers
+
+The extension supports RevealJS-specific modifiers for presentations:
+
+### Slide modifier
+
+Use `.excl .slide` to create a new slide before the excluded content:
+
+```markdown
+::: {.excl .slide}
+Solution content appears on a new slide.
+:::
+```
+
+### Fragment modifier
+
+Use `.excl .fragment` to reveal content as a RevealJS fragment:
+
+```markdown
+The answer is [42]{.excl .fragment}
+```
+
 ## Roadmap
 
 Future features under consideration:
 
-- **RevealJS modifiers:** `.excl .slide` (new slide before content) and `.excl .fragment` (reveal on click/pause)
 - **Solution styling:** Subtle visual distinction for `.excl` content when shown (e.g., light background, border)
 
 ## License
